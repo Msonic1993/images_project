@@ -82,8 +82,9 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = 'C:/Users/wdziwoki/PycharmProjects/project1/project/media'
+# MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media_root")
+
 
 WSGI_APPLICATION = 'project.wsgi.application'
 

@@ -4,12 +4,13 @@ from rest_framework import serializers
 from rest_framework.fields import FileField
 from rest_framework.serializers import ModelSerializer
 
-from .models import Storage
+from .models import Storage, Sizes
+
 
 class StorageSerializer(ModelSerializer):
     class Meta:
         model = Storage
-        fields = ['id', 'fileName', 'path','file', 'owner']
+        fields = ['id', 'fileName', 'path', 'owner']
 
 
 User = get_user_model()
@@ -48,3 +49,9 @@ class UploadSerializer(serializers.Serializer):
     file_uploaded = FileField()
     class Meta:
         fields = ['file_uploaded']
+
+
+class SizesSerializer(ModelSerializer):
+    class Meta:
+        model = Sizes
+        fields = ['size']

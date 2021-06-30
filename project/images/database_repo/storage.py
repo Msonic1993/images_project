@@ -10,10 +10,10 @@ class StorageTab:
             data = Storage.objects.filter()
         return data
 
-    def getOne(self, request,path):
+    def getOne(self, request,filename):
 
         if request.user.is_superuser == False:
-            data = Storage.objects.get(path=path)
+            data = Storage.objects.get(fileName=filename)
         else:
-            data = Storage.objects.get(path=path)
+            data = Storage.objects.get(fileName=filename)
         return data

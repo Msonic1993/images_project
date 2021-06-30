@@ -1,14 +1,20 @@
 import os
 
+from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponse, Http404
+from django.utils.timezone import now
 
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, GenericViewSet
+
+from images.database_repo.plans import PlansTab
 from images.database_repo.storage import StorageTab
+from images.plans.plans_checker import Plans
 from images.serializers import StorageSerializer
-from project import settings
-from project.settings import MEDIA_ROOT
+
 
 
 class ImagesView(ViewSet):
@@ -20,14 +26,17 @@ class ImagesView(ViewSet):
         return Response(serializer.data)
 
     def post(self,request):
-        path = request.POST['path']
-        queryset = StorageTab().getOne(request,path)
-        file_url = queryset.file.url()
-        print(file_url)
-        if os.path.exists(file_url):
-            with open(file_url, 'rb') as f:
-                return HttpResponse(f.read(), content_type="image/png" )
+        filename = request.POST['fileName']
+        queryset = StorageTab().getOne(request,filename)
+        file_url = queryset.file.url
+        if os.path.exists(settings.MEDIA_ROOT+file_url):
+           sizes = Plans().check(request)
+           data = {
+           'images-url': reverse ('images', args = [file_url], request = request)
+           }
+           return Response (data)
 
 
-        raise Http404
+        return  Response('File not found')
+
 

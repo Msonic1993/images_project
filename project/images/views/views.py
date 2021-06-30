@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sites.models import Site
 from django.http import HttpResponse, Http404
 from django.utils.timezone import now
 
@@ -31,8 +32,9 @@ class ImagesView(ViewSet):
         file_url = queryset.file.url
         if os.path.exists(settings.MEDIA_ROOT+file_url):
            sizes = Plans().check(request)
+           domain = Site.objects.get_current().domain
            data = {
-           'images-url': reverse ('images', args = [file_url], request = request)
+           'URL':request.get_host()+file_url
            }
            return Response (data)
 

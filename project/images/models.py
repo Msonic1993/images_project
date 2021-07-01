@@ -9,8 +9,6 @@ class Plans (models.Model):
         return self.name
 
     name = models.CharField (max_length = 148)
-    originalImgOmit = models.IntegerField(null=True)
-    expiringLink = models.IntegerField(null=True)
     users = models.ManyToManyField (User)
 
     class Meta:
@@ -29,7 +27,7 @@ class Sizes (models.Model):
         ordering = [ 'size' ]
 
 
-class Storage (models.Model,):
+class Storage (models.Model):
     def __str__ (self):
         return self.fileName
 

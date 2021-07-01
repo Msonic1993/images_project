@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,8 +43,9 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework.authtoken',
     'images',
-]
 
+]
+SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,12 +62,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+
 'DEFAULT_PERMISSION_CLASSES' : (
         'rest_framework.permissions.IsAuthenticated' ,
     ) ,
 }
 
 ROOT_URLCONF = 'project.urls'
+
 
 TEMPLATES = [
     {

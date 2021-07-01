@@ -1,9 +1,6 @@
 
 from django.urls import path, include
 from rest_framework import routers
-
-from django.conf import settings
-from django.conf.urls.static import static
 from .views.login import userLogin
 from .views.logout import userLogout
 from .views.upload import FileUploadView
@@ -19,3 +16,5 @@ urlpatterns = [
     path('login/', userLogin, name="login"),
     path('logout/', userLogout, name="logout"),
 ]
+
+

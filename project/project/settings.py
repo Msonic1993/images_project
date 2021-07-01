@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import datetime
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
+    'rest_framework_expiring_authtoken',
     'images',
+
 ]
 SITE_ID = 1
 MIDDLEWARE = [
@@ -66,6 +70,8 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'project.urls'
+
+EXPIRING_TOKEN_LIFESPAN = datetime.timedelta(minutes=1)
 
 TEMPLATES = [
     {

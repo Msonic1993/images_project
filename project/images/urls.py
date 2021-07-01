@@ -6,6 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views.login import userLogin
 from .views.logout import userLogout
+from .views.test import test
 from .views.upload import FileUploadView
 from .views.views import ImagesView
 router =routers.DefaultRouter()
@@ -18,4 +19,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login/', userLogin, name="login"),
     path('logout/', userLogout, name="logout"),
+    path('test/',test, name="test"),
 ]

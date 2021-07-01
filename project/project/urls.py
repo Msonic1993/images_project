@@ -18,7 +18,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from images.views.indexview import indexview
+
 urlpatterns = [
+    path('', indexview, name='index'),
     path('admin/', admin.site.urls),
     path('api/', include('images.urls')),
     path('api/auth/', include('djoser.urls.authtoken')),

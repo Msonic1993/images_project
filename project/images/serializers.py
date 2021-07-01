@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.fields import FileField
 from rest_framework.serializers import ModelSerializer
 
-from .models import Storage, Sizes
+from .models import Storage, Sizes, ExpiringFiles
 
 
 class StorageSerializer(ModelSerializer):
@@ -13,9 +13,20 @@ class StorageSerializer(ModelSerializer):
         fields = ['id', 'fileName', 'path', 'owner']
 
 
+class Cos(serializers.Serializer):
+    class Meta:
+        model = Storage
+        fields = ['availableTime']
+
 User = get_user_model()
 
+class ExpiringFilesSerializer(ModelSerializer):
+    class Meta:
+        model = ExpiringFiles
+        fields = ['fileName', 'path', 'availableTime', 'owner']
 
+
+User = get_user_model()
 class LoginSerializers(serializers.Serializer):
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(

@@ -34,9 +34,9 @@ class ImagesView(ViewSet):
            sizes = Plans().check(request)
            data_list = []
            for i in sizes:
-                im1 = Image.open(settings.MEDIA_ROOT+"\\media\\"+filename)
+                im1 = Image.open(settings.MEDIA_ROOT+"/media/"+filename)
                 im_small = im1.resize((i[0], i[0]), Image.ANTIALIAS)
-                im_small.save(settings.MEDIA_ROOT+"\\media\\"+str(i[0])+filename)
+                im_small.save(settings.MEDIA_ROOT+"/media/"+str(i[0])+filename)
                 data = {'Plan':str(current_user_plan), 'URLS':request.get_host()+"/media/"+str(i[0])+filename}
                 data_list.append(data)
            if originalImgOmit == 0:

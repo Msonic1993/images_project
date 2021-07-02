@@ -6,7 +6,7 @@ from .views.links import ExpiringLinksView
 from .views.login import userLogin
 from .views.logout import userLogout
 from .views.upload import FileUploadView
-from .views.views import ImagesView
+from .views.images import ImagesView
 router =routers.DefaultRouter()
 router.register('images', ImagesView, basename="images")
 router.register(r'upload', FileUploadView, basename="upload")

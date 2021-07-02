@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 from django.conf import settings
+from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
@@ -14,9 +15,13 @@ class ImagesView(ViewSet):
     serializer_class = StorageSerializer
 
     def list(self, request):
-        queryset = StorageTab().getAll(request)
-        serializer = StorageSerializer(queryset, many=True)
-        return Response(serializer.data)
+        try:
+            queryset = StorageTab().getAll(request)
+            serializer = StorageSerializer(queryset, many=True)
+            return Response(serializer.data)
+        except:
+            raise Http404
+
 
     def post(self,request):
         filename = request.POST['fileName']
@@ -32,14 +37,11 @@ class ImagesView(ViewSet):
                 im1 = Image.open(settings.MEDIA_ROOT+"\\media\\"+filename)
                 im_small = im1.resize((i[0], i[0]), Image.ANTIALIAS)
                 im_small.save(settings.MEDIA_ROOT+"\\media\\"+str(i[0])+filename)
-                data = {'URLS':request.get_host()+"/media/"+str(i[0])+filename}
+                data = {'Plan':str(current_user_plan), 'URLS':request.get_host()+"/media/"+str(i[0])+filename}
                 data_list.append(data)
            if originalImgOmit == 0:
                 data_list.append(request.get_host()+file_url)
            if expiringLinkFlag == 1:
                data_list.append(request.get_host() + file_url)
-               # data = get_some_data_or_whatever()
-           return Response(str(current_user_plan) + str(data_list))
-
-        return  Response('File not found')
-
+           return Response(str(data_list))
+        else: return  Response('File not found')
